@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Khurshid Alam — Senior WordPress Developer</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+
+  <style>
+    :root {
+      --navy: #0D1B2A;
+      --navy-card: #1A2C3D;
+      --navy-border: #243B52;
+      --cyan: #00C9B1;
+      --cyan-dim: rgba(0,201,177,0.12);
+      --cyan-mid: rgba(0,201,177,0.35);
+      --white: #F0F4F8;
+      --slate: #8BA5BC;
+      --slate-dark: #4A6278;
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--navy); }
+    ::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 3px; }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      background: rgba(13,27,42,0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--navy-border);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: box-shadow 0.3s;
+    }
+    .navbar.scrolled { box-shadow: 0 4px 30px rgba(0,201,177,0.08); }
+    .navbar-brand {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--white) !important;
+      letter-spacing: -0.02em;
+    }
+    .navbar-brand span { color: var(--cyan); }
+    .nav-link {
+      color: var(--slate) !important;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.9rem !important;
+      transition: color 0.2s;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--cyan) !important; }
+    .navbar-toggler { border-color: var(--navy-border); }
+    .navbar-toggler-icon { filter: invert(1); }
+    .btn-hire {
+      background: var(--cyan);
+      color: var(--navy) !important;
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.45rem 1.1rem !important;
+      border-radius: 4px;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-hire:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 6rem 0 4rem;
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,201,177,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,201,177,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+    }
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,201,177,0.12) 0%, transparent 70%);
+      top: -100px; left: -100px;
+      pointer-events: none;
+    }
+    .hero-glow-2 {
+      position: absolute;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(0,150,255,0.07) 0%, transparent 70%);
+      bottom: 0; right: 0;
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--cyan-dim);
+      border: 1px solid var(--cyan-mid);
+      color: var(--cyan);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge .dot {
+      width: 7px; height: 7px;
+      background: var(--cyan);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .hero-name .accent { color: var(--cyan); }
+    .hero-terminal {
+      font-family: var(--font-mono);
+      font-size: clamp(1rem, 2.5vw, 1.35rem);
+      color: var(--slate);
+      margin-bottom: 1.75rem;
+      min-height: 2rem;
+    }
+    .hero-terminal .prompt { color: var(--cyan); margin-right: 0.4rem; }
+    .cursor {
+      display: inline-block;
+      width: 2px; height: 1.1em;
+      background: var(--cyan);
+      vertical-align: middle;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+    .hero-desc {
+      color: var(--slate);
+      font-size: 1.05rem;
+      max-width: 520px;
+      margin-bottom: 2rem;
+      line-height: 1.75;
+    }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary-custom {
+      background: var(--cyan);
+      color: var(--navy);
+      font-weight: 700;
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: 6px;
+      border: none;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary-custom:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,201,177,0.3);
+      color: var(--navy);
+    }
+    .btn-outline-custom {
+      background: transparent;
+      color: var(--white);
+      font-weight: 600;
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: 6px;
+      border: 1px solid var(--navy-border);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-outline-custom:hover { border-color: var(--cyan); color: var(--cyan); }
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+    }
+    .stat-item { }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--cyan);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--slate);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 0.2rem;
+    }
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .code-window {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: 12px;
+      overflow: hidden;
+      width: 100%;
+      max-width: 460px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,201,177,0.08);
+    }
+    .code-header {
+      background: #162336;
+      padding: 0.8rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--navy-border);
+    }
+    .dot-r { width:11px;height:11px;border-radius:50%;background:#FF5F57; }
+    .dot-y { width:11px;height:11px;border-radius:50%;background:#FFBD2E; }
+    .dot-g { width:11px;height:11px;border-radius:50%;background:#28CA41; }
+    .code-title { font-family:var(--font-mono);font-size:0.72rem;color:var(--slate);margin-left:0.5rem; }
+    .code-body { padding: 1.25rem 1.5rem; font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.8; }
+    .c-comment { color: #4A6278; }
+    .c-key { color: #7EC8E3; }
+    .c-val { color: #00C9B1; }
+    .c-str { color: #E5A663; }
+    .c-fn { color: #C792EA; }
+    .c-tag { color: #FF7597; }
+    .code-line { margin: 0; }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 5rem 0; }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+    }
+    .section-line {
+      width: 48px; height: 3px;
+      background: var(--cyan);
+      border-radius: 2px;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── SKILLS BENTO ── */
+    #skills { background: #0b1824; }
+    .skill-bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem; }
+    .bento-card {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .bento-card:hover { border-color: var(--cyan); transform: translateY(-3px); }
+    .bento-wide { grid-column: span 7; }
+    .bento-narrow { grid-column: span 5; }
+    .bento-full { grid-column: span 12; }
+    .bento-third { grid-column: span 4; }
+    @media (max-width: 991px) {
+      .bento-wide, .bento-narrow, .bento-third { grid-column: span 12; }
+    }
+    .bento-icon {
+      width: 42px; height: 42px;
+      background: var(--cyan-dim);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.25rem;
+      color: var(--cyan);
+      margin-bottom: 1rem;
+    }
+    .bento-label {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .pill-group { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .pill {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--navy-border);
+      color: var(--slate);
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      padding: 0.25rem 0.65rem;
+      border-radius: 100px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .pill:hover { border-color: var(--cyan); color: var(--cyan); }
+    .skill-bar-row { margin-bottom: 0.9rem; }
+    .skill-bar-label {
+      display: flex; justify-content: space-between;
+      font-size: 0.8rem; color: var(--slate); margin-bottom: 0.3rem;
+    }
+    .skill-bar-track {
+      height: 5px; background: rgba(255,255,255,0.07);
+      border-radius: 3px; overflow: hidden;
+    }
+    .skill-bar-fill {
+      height: 100%; background: var(--cyan);
+      border-radius: 3px;
+      width: 0;
+      transition: width 1.2s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* ── EXPERIENCE TIMELINE ── */
+    #experience { background: var(--navy); }
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--cyan), transparent);
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3rem;
+      padding-left: 1.5rem;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.35rem; top: 0.35rem;
+      width: 12px; height: 12px;
+      background: var(--cyan);
+      border-radius: 50%;
+      border: 3px solid var(--navy);
+      box-shadow: 0 0 0 2px var(--cyan);
+    }
+    .timeline-date {
+      font-family: var(--font-mono);
+      font-size: 0.73rem;
+      color: var(--cyan);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+    .timeline-role {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.15rem;
+    }
+    .timeline-company {
+      font-size: 0.85rem;
+      color: var(--slate);
+      margin-bottom: 1rem;
+    }
+    .timeline-list {
+      list-style: none;
+      padding: 0;
+    }
+    .timeline-list li {
+      position: relative;
+      padding-left: 1.2rem;
+      font-size: 0.9rem;
+      color: var(--slate);
+      margin-bottom: 0.5rem;
+      line-height: 1.6;
+    }
+    .timeline-list li::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      color: var(--cyan);
+      font-weight: 700;
+    }
+
+    /* ── PROJECTS ── */
+    #projects { background: #0b1824; }
+    .project-card {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+      height: 100%;
+    }
+    .project-card:hover {
+      border-color: var(--cyan);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    }
+    .project-card-header {
+      padding: 1.5rem 1.5rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .project-icon {
+      width: 46px; height: 46px;
+      background: var(--cyan-dim);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.35rem;
+      color: var(--cyan);
+    }
+    .project-link {
+      color: var(--slate);
+      font-size: 1rem;
+      transition: color 0.2s;
+    }
+    .project-link:hover { color: var(--cyan); }
+    .project-card-body { padding: 1.25rem 1.5rem 1.5rem; }
+    .project-title {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .project-desc {
+      font-size: 0.85rem;
+      color: var(--slate);
+      line-height: 1.65;
+      margin-bottom: 1.1rem;
+    }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .project-tag {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--cyan);
+      background: var(--cyan-dim);
+      border: 1px solid rgba(0,201,177,0.2);
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--navy); }
+    .about-card {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+    .about-avatar {
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      background: var(--cyan-dim);
+      border: 2px solid var(--cyan);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem;
+      color: var(--cyan);
+      margin-bottom: 1.25rem;
+    }
+    .about-name {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+    .about-role { font-size: 0.85rem; color: var(--cyan); margin-bottom: 1rem; }
+    .about-detail {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--slate);
+      margin-bottom: 0.4rem;
+    }
+    .about-detail i { color: var(--cyan); width: 16px; }
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
+    .info-item {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--navy-border);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .info-item-label { font-size: 0.72rem; color: var(--slate); text-transform: uppercase; letter-spacing: 0.08em; }
+    .info-item-val { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: var(--cyan); }
+
+    /* ── CONTACT ── */
+    #contact { background: #0b1824; }
+    .contact-card {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: border-color 0.25s;
+    }
+    .contact-card:hover { border-color: var(--cyan); }
+    .contact-card i {
+      font-size: 1.5rem;
+      color: var(--cyan);
+      margin-bottom: 0.75rem;
+    }
+    .contact-card-label { font-size: 0.75rem; color: var(--slate); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.25rem; }
+    .contact-card-val { font-family: var(--font-display); font-weight: 600; font-size: 0.95rem; color: var(--white); word-break: break-all; }
+    .contact-card a { color: var(--white); text-decoration: none; transition: color 0.2s; }
+    .contact-card a:hover { color: var(--cyan); }
+    .cta-box {
+      background: linear-gradient(135deg, rgba(0,201,177,0.1) 0%, rgba(0,150,255,0.05) 100%);
+      border: 1px solid var(--cyan-mid);
+      border-radius: 12px;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+    .cta-sub { color: var(--slate); margin-bottom: 2rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #080f18;
+      border-top: 1px solid var(--navy-border);
+      padding: 2rem 0;
+      text-align: center;
+    }
+    footer p { font-size: 0.82rem; color: var(--slate-dark); margin: 0; }
+    footer span { color: var(--cyan); }
+
+    /* ── FADE-IN ANIMATION ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 767px) {
+      .hero-stats { gap: 1.5rem; }
+      .info-grid { grid-template-columns: 1fr; }
+      .code-window { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAVBAR ── -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="#hero">KA<span>.</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+          <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+          <li class="nav-item ms-lg-2">
+            <a class="nav-link btn-hire" href="mailto:khurshidalamwp@gmail.com">Hire Me</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section id="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-glow-2"></div>
+    <div class="container position-relative">
+      <div class="row align-items-center gy-5">
+        <div class="col-lg-7">
+          <div class="hero-badge">
+            <div class="dot"></div>
+            Available for Freelance
+          </div>
+          <h1 class="hero-name">Khurshid<br><span class="accent">Alam</span></h1>
+          <p class="hero-terminal">
+            <span class="prompt">$</span>
+            <span id="typed-text"></span><span class="cursor"></span>
+          </p>
+          <p class="hero-desc">
+            Senior WordPress Developer with 5+ years of experience crafting high-performance web platforms — from custom LMS systems and WooCommerce stores to REST API integrations and multilingual sites.
+          </p>
+          <div class="hero-actions">
+            <a href="#projects" class="btn-primary-custom">
+              <i class="bi bi-grid-3x3-gap-fill"></i> View Projects
+            </a>
+            <a href="#contact" class="btn-outline-custom">
+              <i class="bi bi-envelope"></i> Get In Touch
+            </a>
+            <a href="/CV/Khurshid_Alam_CV.pdf" download="Khurshid_Alam_CV.pdf" class="btn-outline-custom">
+              <i class="bi bi-file-earmark-arrow-down"></i> Download CV
+            </a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-item">
+              <div class="stat-num">5+</div>
+              <div class="stat-label">Years Exp.</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">100+</div>
+              <div class="stat-label">Websites Built</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">50+</div>
+              <div class="stat-label">Migrations Done</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5 hero-visual">
+          <div class="code-window">
+            <div class="code-header">
+              <div class="dot-r"></div>
+              <div class="dot-y"></div>
+              <div class="dot-g"></div>
+              <span class="code-title">developer.php</span>
+            </div>
+            <div class="code-body">
+              <pre class="code-line"><span class="c-comment">// Khurshid Alam — Senior Dev</span></pre>
+              <pre class="code-line"><span class="c-fn">$developer</span> = [</pre>
+              <pre class="code-line">  <span class="c-key">'name'</span>     => <span class="c-str">'Khurshid Alam'</span>,</pre>
+              <pre class="code-line">  <span class="c-key">'role'</span>     => <span class="c-str">'Senior WP Dev'</span>,</pre>
+              <pre class="code-line">  <span class="c-key">'location'</span> => <span class="c-str">'Kolkata, India'</span>,</pre>
+              <pre class="code-line">  <span class="c-key">'exp'</span>      => <span class="c-val">5</span> . <span class="c-str">' years'</span>,</pre>
+              <pre class="code-line">  <span class="c-key">'sites'</span>    => <span class="c-str">'100+ built'</span>,</pre>
+              <pre class="code-line">  <span class="c-key">'stack'</span>    => [</pre>
+              <pre class="code-line">    <span class="c-str">'PHP'</span>, <span class="c-str">'WordPress'</span>,</pre>
+              <pre class="code-line">    <span class="c-str">'WooCommerce'</span>, <span class="c-str">'Shopify'</span>,</pre>
+              <pre class="code-line">    <span class="c-str">'CodeIgniter'</span>, <span class="c-str">'REST API'</span>,</pre>
+              <pre class="code-line">  ],</pre>
+              <pre class="code-line">  <span class="c-key">'status'</span>   => <span class="c-val">true</span>,</pre>
+              <pre class="code-line">  <span class="c-comment">// ↑ open to work</span></pre>
+              <pre class="code-line">];</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ── -->
+  <section id="about">
+    <div class="container">
+      <div class="section-label fade-up">01 — About</div>
+      <h2 class="section-title fade-up">Who I Am</h2>
+      <div class="section-line fade-up"></div>
+      <div class="row gy-4 align-items-stretch">
+        <div class="col-md-4 fade-up">
+          <div class="about-card h-100">
+            <div class="about-avatar"><i class="bi bi-person"></i></div>
+            <div class="about-name">Khurshid Alam</div>
+            <div class="about-role">Senior WordPress Developer</div>
+            <div class="about-detail"><i class="bi bi-geo-alt-fill"></i> Kolkata, New Town, WB 700156</div>
+            <div class="about-detail"><i class="bi bi-telephone-fill"></i> +91 7384613701</div>
+            <div class="about-detail"><i class="bi bi-envelope-fill"></i> khurshidalamwp@gmail.com</div>
+            <div class="about-detail"><i class="bi bi-linkedin"></i> linkedin.com/in/khurshid-alam-642ba3126</div>
+            <div class="about-detail"><i class="bi bi-translate"></i> Bengali · Hindi · English</div>
+            <div class="info-grid">
+              <div class="info-item"><div class="info-item-label">Experience</div><div class="info-item-val">5+</div></div>
+              <div class="info-item"><div class="info-item-label">Projects</div><div class="info-item-val">100+</div></div>
+              <div class="info-item"><div class="info-item-label">Migrations</div><div class="info-item-val">50+</div></div>
+              <div class="info-item"><div class="info-item-label">Grad Year</div><div class="info-item-val">2016</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8 fade-up">
+          <div class="about-card h-100">
+            <p style="color:var(--slate); font-size:1.02rem; line-height:1.85; margin-bottom:1.25rem;">
+              I'm a Senior WordPress Developer based in Kolkata, India, with over 5 years of hands-on experience delivering custom web solutions for clients across industries. I've built everything from Learning Management Systems and Patient Management dashboards to multilingual booking portals and Shopify storefronts.
+            </p>
+            <p style="color:var(--slate); font-size:1.02rem; line-height:1.85; margin-bottom:1.5rem;">
+              My expertise lies in bridging business goals with clean, performant code — whether that's writing a custom WooCommerce hook, building a REST API to connect two systems, or migrating a legacy HTML site to a fully responsive WordPress platform. I care deeply about page speed, SEO, and code that other developers can actually work with.
+            </p>
+            <div class="row gy-3">
+              <div class="col-sm-6">
+                <div style="background:rgba(255,255,255,0.03);border:1px solid var(--navy-border);border-radius:8px;padding:1rem;">
+                  <div style="color:var(--cyan);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.4rem;">Education</div>
+                  <div style="font-family:var(--font-display);font-weight:600;font-size:0.95rem;margin-bottom:0.2rem;">B.Tech — Computer Science</div>
+                  <div style="font-size:0.8rem;color:var(--slate);">Murshidabad College of Engineering &amp; Technology · 2016</div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div style="background:rgba(255,255,255,0.03);border:1px solid var(--navy-border);border-radius:8px;padding:1rem;">
+                  <div style="color:var(--cyan);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.4rem;">Current Role</div>
+                  <div style="font-family:var(--font-display);font-weight:600;font-size:0.95rem;margin-bottom:0.2rem;">Senior WordPress Developer</div>
+                  <div style="font-size:0.8rem;color:var(--slate);">First Rite IT Services · Jan 2025 – Present</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SKILLS ── -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-label fade-up">02 — Skills</div>
+      <h2 class="section-title fade-up">Technical Expertise</h2>
+      <div class="section-line fade-up"></div>
+      <div class="skill-bento fade-up">
+        <!-- PHP & Backend -->
+        <div class="bento-card bento-wide">
+          <div class="bento-icon"><i class="bi bi-code-slash"></i></div>
+          <div class="bento-label">Backend Development</div>
+          <div class="skill-bar-row">
+            <div class="skill-bar-label"><span>PHP</span><span>95%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-w="95"></div></div>
+          </div>
+          <div class="skill-bar-row">
+            <div class="skill-bar-label"><span>WordPress Core</span><span>95%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-w="95"></div></div>
+          </div>
+          <div class="skill-bar-row">
+            <div class="skill-bar-label"><span>CodeIgniter (MVC)</span><span>80%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-w="80"></div></div>
+          </div>
+          <div class="skill-bar-row">
+            <div class="skill-bar-label"><span>REST API</span><span>88%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-w="88"></div></div>
+          </div>
+          <div class="skill-bar-row">
+            <div class="skill-bar-label"><span>MySQL</span><span>82%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-w="82"></div></div>
+          </div>
+        </div>
+
+        <!-- eCommerce -->
+        <div class="bento-card bento-narrow">
+          <div class="bento-icon"><i class="bi bi-bag-check"></i></div>
+          <div class="bento-label">eCommerce</div>
+          <div class="pill-group">
+            <span class="pill">WooCommerce</span>
+            <span class="pill">Shopify</span>
+            <span class="pill">Liquid Templates</span>
+            <span class="pill">Custom Themes</span>
+            <span class="pill">Cart Hooks</span>
+            <span class="pill">Payment Gateways</span>
+            <span class="pill">Product Variants</span>
+          </div>
+        </div>
+
+        <!-- Frontend -->
+        <div class="bento-card bento-third">
+          <div class="bento-icon"><i class="bi bi-palette2"></i></div>
+          <div class="bento-label">Frontend</div>
+          <div class="pill-group">
+            <span class="pill">HTML5</span>
+            <span class="pill">CSS3</span>
+            <span class="pill">JavaScript</span>
+            <span class="pill">jQuery</span>
+            <span class="pill">AJAX</span>
+            <span class="pill">Elementor</span>
+          </div>
+        </div>
+
+        <!-- WordPress Tools -->
+        <div class="bento-card bento-third">
+          <div class="bento-icon"><i class="bi bi-plugin"></i></div>
+          <div class="bento-label">WP Toolbelt</div>
+          <div class="pill-group">
+            <span class="pill">ACF Pro</span>
+            <span class="pill">CPT UI</span>
+            <span class="pill">Custom Taxonomies</span>
+            <span class="pill">Shortcodes</span>
+            <span class="pill">Widgets</span>
+            <span class="pill">Multisite</span>
+          </div>
+        </div>
+
+        <!-- DevOps & Performance -->
+        <div class="bento-card bento-third">
+          <div class="bento-icon"><i class="bi bi-speedometer2"></i></div>
+          <div class="bento-label">DevOps & Speed</div>
+          <div class="pill-group">
+            <span class="pill">Git / GitHub</span>
+            <span class="pill">cPanel</span>
+            <span class="pill">SSL</span>
+            <span class="pill">Website Migration</span>
+            <span class="pill">Caching</span>
+            <span class="pill">Core Web Vitals</span>
+            <span class="pill">Technical SEO</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EXPERIENCE ── -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-label fade-up">03 — Experience</div>
+      <h2 class="section-title fade-up">Work History</h2>
+      <div class="section-line fade-up"></div>
+      <div class="row">
+        <div class="col-lg-8 fade-up">
+          <div class="timeline">
+
+            <div class="timeline-item">
+              <div class="timeline-date">Jan 2025 — Present</div>
+              <div class="timeline-role">Senior WordPress Developer</div>
+              <div class="timeline-company"><i class="bi bi-building me-1"></i> First Rite IT Services · Kolkata, WB</div>
+              <ul class="timeline-list">
+                <li>Built custom LMS platforms with student enrollment, quiz modules, admin reporting, and role-based access control.</li>
+                <li>Developed Shopify stores with custom themes and flexible content sections clients can manage without touching code.</li>
+                <li>Built web applications using CodeIgniter tailored to each client's specific business workflows.</li>
+              </ul>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-date">Jul 2023 — May 2025</div>
+              <div class="timeline-role">Senior WordPress Developer</div>
+              <div class="timeline-company"><i class="bi bi-building me-1"></i> Esolz Technologies Pvt. Ltd. · Kolkata, Newtown, WB</div>
+              <ul class="timeline-list">
+                <li>Built and maintained WordPress sites with custom post types, fields, shortcodes, WooCommerce, and REST APIs.</li>
+                <li>Connected WordPress and CodeIgniter apps via secure APIs for automatic data syncing between systems.</li>
+                <li>Developed custom WooCommerce features using hooks to meet complex client requirements.</li>
+                <li>Boosted page speed through image compression, caching strategies, and CSS/JS minification.</li>
+                <li>Resolved complex WordPress bugs and managed code via Git in cross-functional teams.</li>
+              </ul>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-date">Jun 2018 — May 2023</div>
+              <div class="timeline-role">Web Developer</div>
+              <div class="timeline-company"><i class="bi bi-building me-1"></i> Bariza Software Solutions LLP · Kolkata, Newtown, WB</div>
+              <ul class="timeline-list">
+                <li>Converted 50+ static HTML websites into modern, responsive WordPress and WooCommerce platforms.</li>
+                <li>Managed hosting, SSL setup, migrations, backups, and ongoing site maintenance.</li>
+                <li>Improved website speed and Google rankings through SEO best practices and Core Web Vitals optimisation.</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+        <div class="col-lg-4 fade-up">
+          <div class="about-card">
+            <div style="font-family:var(--font-display);font-size:1rem;font-weight:700;margin-bottom:1rem;">Education</div>
+            <div class="bento-icon mb-3"><i class="bi bi-mortarboard-fill"></i></div>
+            <div style="font-family:var(--font-display);font-weight:700;font-size:1rem;margin-bottom:0.3rem;">B.Tech — Computer Science & Engineering</div>
+            <div style="font-size:0.83rem;color:var(--slate);margin-bottom:0.6rem;">Murshidabad College of Engineering & Technology</div>
+            <div style="font-size:0.83rem;color:var(--slate);margin-bottom:0.6rem;">Maulana Abul Kalam Azad University of Technology, WB</div>
+            <div class="pill-group mt-2"><span class="pill">Graduated 2016</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROJECTS ── -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-label fade-up">04 — Projects</div>
+      <h2 class="section-title fade-up">Key Projects</h2>
+      <div class="section-line fade-up"></div>
+      <div class="row gy-4">
+
+        <div class="col-md-6 col-xl-4 fade-up">
+          <div class="project-card">
+            <div class="project-card-header">
+              <div class="project-icon"><i class="bi bi-mortarboard-fill"></i></div>
+              <a href="https://cprtec.net" target="_blank" class="project-link"><i class="bi bi-arrow-up-right-square"></i></a>
+            </div>
+            <div class="project-card-body">
+              <div class="project-title">LMS Management System</div>
+              <div class="project-desc">Full-featured learning platform on WordPress — student enrollment, quizzes, admin reporting, and role-based access management. Built for cprtec.net.</div>
+              <div class="project-tags">
+                <span class="project-tag">WordPress</span>
+                <span class="project-tag">PHP</span>
+                <span class="project-tag">LMS</span>
+                <span class="project-tag">ACF Pro</span>
+                <span class="project-tag">MySQL</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-xl-4 fade-up">
+          <div class="project-card">
+            <div class="project-card-header">
+              <div class="project-icon"><i class="bi bi-calendar2-check"></i></div>
+              <a href="https://mdva.solutions" target="_blank" class="project-link"><i class="bi bi-arrow-up-right-square"></i></a>
+            </div>
+            <div class="project-card-body">
+              <div class="project-title">Appointment Booking System</div>
+              <div class="project-desc">Smart booking form restricted to Mon–Fri, 1–5 PM. Admin-approved slots are automatically blocked from double booking. Built for mdva.solutions.</div>
+              <div class="project-tags">
+                <span class="project-tag">WordPress</span>
+                <span class="project-tag">AJAX</span>
+                <span class="project-tag">Custom CPT</span>
+                <span class="project-tag">jQuery</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-xl-4 fade-up">
+          <div class="project-card">
+            <div class="project-card-header">
+              <div class="project-icon"><i class="bi bi-diagram-3"></i></div>
+              <a href="https://katara.com.au" target="_blank" class="project-link"><i class="bi bi-arrow-up-right-square"></i></a>
+            </div>
+            <div class="project-card-body">
+              <div class="project-title">WordPress Multisite Network</div>
+              <div class="project-desc">Five separate websites unified under one WordPress installation, each with its own domain but managed from a single admin panel. Built for katara.com.au.</div>
+              <div class="project-tags">
+                <span class="project-tag">WordPress Multisite</span>
+                <span class="project-tag">Domain Mapping</span>
+                <span class="project-tag">cPanel</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-xl-4 fade-up">
+          <div class="project-card">
+            <div class="project-card-header">
+              <div class="project-icon"><i class="bi bi-shop"></i></div>
+              <a href="https://springcrust.com" target="_blank" class="project-link"><i class="bi bi-arrow-up-right-square"></i></a>
+            </div>
+            <div class="project-card-body">
+              <div class="project-title">Shopify eCommerce Store</div>
+              <div class="project-desc">Converted a custom HTML design into a fully functional Shopify store with client-editable content sections — no code knowledge needed. Built for springcrust.com.</div>
+              <div class="project-tags">
+                <span class="project-tag">Shopify</span>
+                <span class="project-tag">Liquid</span>
+                <span class="project-tag">Custom Theme</span>
+                <span class="project-tag">HTML/CSS</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-xl-4 fade-up">
+          <div class="project-card">
+            <div class="project-card-header">
+              <div class="project-icon"><i class="bi bi-globe2"></i></div>
+              <a href="https://gilleundpartner.de" target="_blank" class="project-link"><i class="bi bi-arrow-up-right-square"></i></a>
+            </div>
+            <div class="project-card-body">
+              <div class="project-title">Multilingual Booking Website</div>
+              <div class="project-desc">WordPress site in multiple languages with a localised booking form and calendar. Bookings saved as custom post types for easy back-end management.</div>
+              <div class="project-tags">
+                <span class="project-tag">WordPress</span>
+                <span class="project-tag">WPML</span>
+                <span class="project-tag">Multilingual</span>
+                <span class="project-tag">Booking</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-xl-4 fade-up">
+          <div class="project-card">
+            <div class="project-card-header">
+              <div class="project-icon"><i class="bi bi-plug"></i></div>
+            </div>
+            <div class="project-card-body">
+              <div class="project-title">WordPress & CodeIgniter API Integration</div>
+              <div class="project-desc">Designed and built a secure REST API bridge connecting a WordPress site with a CodeIgniter application, enabling automatic real-time data sync between both systems.</div>
+              <div class="project-tags">
+                <span class="project-tag">PHP</span>
+                <span class="project-tag">REST API</span>
+                <span class="project-tag">CodeIgniter</span>
+                <span class="project-tag">WordPress</span>
+                <span class="project-tag">MySQL</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ── -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-label fade-up">05 — Contact</div>
+      <h2 class="section-title fade-up">Get In Touch</h2>
+      <div class="section-line fade-up"></div>
+
+      <div class="row gy-4 mb-5 fade-up">
+        <div class="col-sm-6 col-lg-3">
+          <div class="contact-card text-center">
+            <i class="bi bi-envelope-fill d-block"></i>
+            <div class="contact-card-label">Email</div>
+            <div class="contact-card-val"><a href="mailto:khurshidalamwp@gmail.com">khurshidalamwp@gmail.com</a></div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="contact-card text-center">
+            <i class="bi bi-telephone-fill d-block"></i>
+            <div class="contact-card-label">Phone</div>
+            <div class="contact-card-val"><a href="tel:+917384613701">+91 7384613701</a></div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="contact-card text-center">
+            <i class="bi bi-linkedin d-block"></i>
+            <div class="contact-card-label">LinkedIn</div>
+            <div class="contact-card-val"><a href="https://linkedin.com/in/khurshid-alam-642ba3126" target="_blank">View Profile</a></div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="contact-card text-center">
+            <i class="bi bi-geo-alt-fill d-block"></i>
+            <div class="contact-card-label">Location</div>
+            <div class="contact-card-val">Kolkata, New Town, WB 700156</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-box fade-up">
+        <h3 class="cta-title">Have a project in mind?</h3>
+        <p class="cta-sub">I'm open to freelance projects, full-time roles, and consulting work. Let's build something great together.</p>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;">
+        <a href="mailto:khurshidalamwp@gmail.com" class="btn-primary-custom">
+          <i class="bi bi-send-fill"></i> Send Me an Email
+        </a>
+        <a href="Khurshid_Alam_CV.pdf" download="Khurshid_Alam_CV.pdf" class="btn-outline-custom">
+          <i class="bi bi-file-earmark-arrow-down"></i> Download CV
+        </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="container">
+      <p>Designed & Built for <span>Khurshid Alam</span> · Senior WordPress Developer · Kolkata, India</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // ── Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 30);
+    });
+
+    // ── Typed text hero
+    const lines = [
+      'Senior WordPress Developer',
+      'PHP & WooCommerce Expert',
+      'Shopify Theme Builder',
+      'REST API Architect',
+      'CodeIgniter Developer',
+    ];
+    let li = 0, ci = 0, del = false;
+    const el = document.getElementById('typed-text');
+    function type() {
+      const cur = lines[li];
+      if (!del) {
+        el.textContent = cur.slice(0, ++ci);
+        if (ci === cur.length) { del = true; setTimeout(type, 1800); return; }
+      } else {
+        el.textContent = cur.slice(0, --ci);
+        if (ci === 0) { del = false; li = (li + 1) % lines.length; }
+      }
+      setTimeout(type, del ? 45 : 70);
+    }
+    type();
+
+    // ── Fade-up on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // ── Skill bars animate on visible
+    const barObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+            bar.style.width = bar.dataset.w + '%';
+          });
+        }
+      });
+    }, { threshold: 0.2 });
+    document.querySelectorAll('.bento-card').forEach(c => barObserver.observe(c));
+
+    // ── Active nav link on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+    window.addEventListener('scroll', () => {
+      let cur = '';
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) cur = s.id; });
+      navLinks.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + cur);
+      });
+    });
+  </script>
+</body>
+</html>
